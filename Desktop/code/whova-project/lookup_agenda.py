@@ -1,4 +1,5 @@
 from db_table import db_table
+import sys
 
 def lookup_agenda(column, value):
     session_schema = {
@@ -27,6 +28,7 @@ def lookup_agenda(column, value):
     })
 
     sessions_table = db_table("sessions", session_schema)
+    
     all_sessions = sessions_table.select()
     matched = {}
 
@@ -72,7 +74,6 @@ def lookup_agenda(column, value):
             print(f"Time: {session['time_start']} - {session['time_end']}")
             print(f"Location: {session['location']}")
 
-
             if session_speakers_list:
                 print(f"Speakers: {', '.join(session_speakers_list)}\n")
             if session['description']:
@@ -81,4 +82,7 @@ def lookup_agenda(column, value):
             print("-" * 70)
 
 if __name__ == "__main__":
-    lookup_agenda("speaker", "Luis Ceze")
+    column = sys.argv[1]
+    value = " ".join(sys.argv[2:])
+
+    lookup_agenda(column, value)
