@@ -61,46 +61,70 @@ def import_data(sheet, sessions, speakers, session_speakers):
     speaker_id_map = {}
     next_speaker_id = 0
 
-    for i, row in enumerate(range(DATA_START_ROW, sheet.nrows)):
-        row_data = [sheet.cell_value(row, col) for col in range(sheet.ncols)]
+    try:
+        for i, row in enumerate(range(DATA_START_ROW, sheet.nrows)):
+            try:
+                row_data = [sheet.cell_value(row, col) for col in range(sheet.ncols)]
 
-        session = {
-            "id": i,
-            "type": row_data[SESSION_TYPE_IDX],
-            "parent_session_id": last_session_id if row_data[SESSION_TYPE_IDX] != "Session" else None,
-            "title": row_data[TITLE_IDX],
-            "date": row_data[DATE_IDX],
-            "time_start": row_data[TIME_START_IDX],
-            "time_end": row_data[TIME_END_IDX],
-            "location": row_data[LOCATION_IDX] if row_data[LOCATION_IDX] else None,
-            "description": row_data[DESCRIPTION_IDX] if row_data[DESCRIPTION_IDX] else None,
-        }
+                session = {
+                    "id": i,
+                    "type": row_data[SESSION_TYPE_IDX],
+                    "parent_session_id": last_session_id if row_data[SESSION_TYPE_IDX] != "Session" else None,
+                    "title": row_data[TITLE_IDX],
+                    "date": row_data[DATE_IDX],
+                    "time_start": row_data[TIME_START_IDX],
+                    "time_end": row_data[TIME_END_IDX],
+                    "location": row_data[LOCATION_IDX] if row_data[LOCATION_IDX] else None,
+                    "description": row_data[DESCRIPTION_IDX] if row_data[DESCRIPTION_IDX] else None,
+                }
 
-        if row_data[SESSION_TYPE_IDX] == "Session":
-            last_session_id = i
+                if row_data[SESSION_TYPE_IDX] == "Session":
+                    last_session_id = i
 
-        sessions.insert(session)
+                try:
+                    sessions.insert(session)
+                except Exception as e:
+                    raise Exception(f"Failed to insert session: {e}")
 
-        if row_data[SPEAKERS_IDX]:
-            speaker_names = [name.strip() for name in row_data[SPEAKERS_IDX].split(';')]
-            
-            for speaker_name in speaker_names:
-                if speaker_name not in speaker_id_map:
-                    speaker_id_map[speaker_name] = next_speaker_id
-                    speakers.insert({
-                        "id": next_speaker_id,
-                        "name": speaker_name
-                    })
-                    next_speaker_id += 1
+                if row_data[SPEAKERS_IDX]:
+                    speaker_names = [name.strip() for name in row_data[SPEAKERS_IDX].split(';')]
+                    
+                    for speaker_name in speaker_names:
+                        if not speaker_name:
+                            continue
+                            
+                        try:
+                            if speaker_name not in speaker_id_map:
+                                speaker_id_map[speaker_name] = next_speaker_id
+                                speakers.insert({
+                                    "id": next_speaker_id,
+                                    "name": speaker_name
+                                })
+                                next_speaker_id += 1
+                            
+                            session_speakers.insert({
+                                "session_id": i,
+                                "speaker_id": speaker_id_map[speaker_name]
+                            })
+                            
+                        except Exception as e:
+                            raise Exception(f"Failed to process speaker {speaker_name}: {e}")
+                            
+            except Exception as e:
+                print(f"Error processing row {row}: {e}")
+                continue 
                 
-                session_speakers.insert({
-                    "session_id": i,
-                    "speaker_id": speaker_id_map[speaker_name]
-                })
-    print("Imported data successfully")
+        print("Imported data successfully")
+        return True
+    
+    except Exception as e:
+        print(f"Failed to import data: {e}")
+        return False
 
 if __name__ == "__main__":
     sessions, speakers, session_speakers = create_tables()
     sh = open_file("./agenda.xls")
     if sh:
-        import_data(sh, sessions, speakers, session_speakers)
+        success = import_data(sh, sessions, speakers, session_speakers)
+        if not success:
+            print("Import process failed")
