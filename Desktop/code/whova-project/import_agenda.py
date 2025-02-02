@@ -26,14 +26,16 @@ def open_file(path):
         return None, None
 
 def create_tables():
+    """Create all necessary database tables"""
+    
     sessions = db_table("sessions", {
         "id": "integer PRIMARY KEY",
         "type": "text",
-        "parent_session_id": "integer", 
+        "parent_session_id": "integer",  
         "title": "text NOT NULL",
-        "date": "text",
-        "time_start": "text",
-        "time_end": "text",
+        "date": "text NOT NULL",
+        "time_start": "text NOT NULL",
+        "time_end": "text NOT NULL",
         "location": "text",
         "description": "text"
     })
@@ -57,6 +59,8 @@ def create_tables():
     return sessions, speakers, session_speakers
 
 if __name__ == "__main__":
+    # Create tables
     sessions, speakers, session_speakers = create_tables()
     
+    # Test file reading
     sh, columns = open_file("./agenda.xls")
