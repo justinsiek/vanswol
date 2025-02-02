@@ -6,17 +6,7 @@ def open_file(path):
         book = xlrd.open_workbook(path)
         sh = book.sheet_by_index(0)
 
-        HEADER_ROW = 14 
-
-        columns = []
-        for col in range(sh.ncols):
-            columns.append(sh.cell_value(HEADER_ROW, col))
-            
-        print("Columns:")
-        for idx, column in enumerate(columns):
-            print(f"{idx}: {column}")
-            
-        return sh, columns
+        return sh
         
     except FileNotFoundError:
         print(f"Error: Could not find file at {path}")
@@ -58,9 +48,47 @@ def create_tables():
 
     return sessions, speakers, session_speakers
 
+def import_data(sheet):
+    
+    DATE_IDX = 0
+    TIME_START_IDX = 1
+    TIME_END_IDX = 2
+    SESSION_TYPE_IDX = 3
+    TITLE_IDX = 4
+    LOCATION_IDX = 5
+    DESCRIPTION_IDX = 6
+    SPEAKERS_IDX = 7
+
+    DATA_START_ROW = 15
+
+    last_session_id = 0
+
+    for i, row in enumerate(range(DATA_START_ROW, DATA_START_ROW + 4)):
+        row_data = [sheet.cell_value(row, col) for col in range(sheet.ncols)]
+
+        session = {
+            "id": i,
+            "type": row_data[SESSION_TYPE_IDX],
+            "parent_session_id": last_session_id if row_data[SESSION_TYPE_IDX] != "Session" else None,
+            "title": row_data[TITLE_IDX],
+            "date": row_data[DATE_IDX],
+            "time_start": row_data[TIME_START_IDX],
+
+            "time_end": row_data[TIME_END_IDX],
+            "location": row_data[LOCATION_IDX] if row_data[LOCATION_IDX] else None,
+            "description": row_data[DESCRIPTION_IDX] if row_data[DESCRIPTION_IDX] else None,
+        }
+
+        if row_data[SESSION_TYPE_IDX] == "Session":
+            last_session_id = i
+
+        print(session)
+        #sessions.insert(session)
+
+
 if __name__ == "__main__":
-    # Create tables
     sessions, speakers, session_speakers = create_tables()
     
-    # Test file reading
-    sh, columns = open_file("./agenda.xls")
+    sh = open_file("./agenda.xls")
+    import_data(sh)
+
