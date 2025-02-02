@@ -44,7 +44,7 @@ def create_tables():
 
     return sessions, speakers, session_speakers
 
-def import_data(sheet, sessions):
+def import_data(sheet, sessions, speakers, session_speakers):
     DATE_IDX = 0
     TIME_START_IDX = 1
     TIME_END_IDX = 2
@@ -57,6 +57,9 @@ def import_data(sheet, sessions):
     DATA_START_ROW = 15
 
     last_session_id = 0
+
+    speaker_id_map = {}
+    next_speaker_id = 0
 
     for i, row in enumerate(range(DATA_START_ROW, sheet.nrows)):
         row_data = [sheet.cell_value(row, col) for col in range(sheet.ncols)]
@@ -76,10 +79,28 @@ def import_data(sheet, sessions):
         if row_data[SESSION_TYPE_IDX] == "Session":
             last_session_id = i
 
-        print("\n", session)
         sessions.insert(session)
+
+        if row_data[SPEAKERS_IDX]:
+            speaker_names = [name.strip() for name in row_data[SPEAKERS_IDX].split(';')]
+            
+            for speaker_name in speaker_names:
+                if speaker_name not in speaker_id_map:
+                    speaker_id_map[speaker_name] = next_speaker_id
+                    speakers.insert({
+                        "id": next_speaker_id,
+                        "name": speaker_name
+                    })
+                    next_speaker_id += 1
+                
+                session_speakers.insert({
+                    "session_id": i,
+                    "speaker_id": speaker_id_map[speaker_name]
+                })
+    print("Imported data successfully")
 
 if __name__ == "__main__":
     sessions, speakers, session_speakers = create_tables()
     sh = open_file("./agenda.xls")
-    import_data(sh, sessions)
+    if sh:
+        import_data(sh, sessions, speakers, session_speakers)
