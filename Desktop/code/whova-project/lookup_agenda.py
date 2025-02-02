@@ -90,7 +90,7 @@ def lookup_agenda(column, value):
                     print(f"Description: {session['description']}")
 
                 print("-" * 70)
-                
+
             except Exception as e:
                 print(f"Error displaying session: {e}")
                 continue
@@ -104,4 +104,9 @@ if __name__ == "__main__":
     column = sys.argv[1]
     value = " ".join(sys.argv[2:])
 
+    valid_columns = ["speaker", "type", "title", "date", "location", "description", "time_start", "time_end"]
+    if column not in valid_columns:
+        print(f"Invalid column. Must be one of: {', '.join(valid_columns)}")
+        sys.exit(1)
+        
     lookup_agenda(column, value)
