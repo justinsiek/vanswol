@@ -12,20 +12,20 @@ type Collection = {
 const collections: Collection[] = [
   {
     id: 1,
-    name: "Chronograph Legacy",
-    description: "A masterpiece of precision engineering, featuring hand-finished movements and a sophisticated complication system.",
+    name: "Watch 1",
+    description: "description text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     price: "From €18,500",
   },
   {
     id: 2,
-    name: "Perpetual Calendar",
-    description: "The pinnacle of horological achievement, accurately tracking days, months, and leap years until the year 2100.",
+    name: "Watch 2",
+    description: "description text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     price: "From €24,900",
   },
   {
     id: 3,
-    name: "Tourbillon Excellence",
-    description: "Our most exclusive creation, featuring a tourbillon cage that rotates to counteract the effects of gravity.",
+    name: "Watch 3",
+    description: "description text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     price: "From €29,800",
   },
 ];

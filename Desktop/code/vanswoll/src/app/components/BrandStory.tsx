@@ -58,11 +58,9 @@ export default function BrandStory() {
             
             <div className="space-y-10 text-base md:text-lg opacity-70 font-light leading-relaxed">
               <p>
-                Mitchell van Swol founded Van Swol & Co with a clear philosophy: quality over quantity. Unlike many new entrants that rely on mass production, his approach is rooted in rarity.
+              filler text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               </p>
-              <p>
-                Each watch is produced in highly limited numbers, ensuring that every piece is both a collector's item and a statement of individuality.
-              </p>
+              
             </div>
             
             {/* Animated horizontal line */}

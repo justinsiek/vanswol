@@ -69,7 +69,7 @@ export default function Anticipation() {
               Anticipate <span className="text-[var(--accent)]">Excellence</span>
             </h3>
             <p className="text-base opacity-80 mb-12 max-w-xl mx-auto leading-relaxed tracking-wide font-light">
-              Our master watchmakers are preparing an unprecedented limited collection of only 25 pieces. Join our waiting list to be among the first to receive exclusive details.
+              anticipation text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
           </div>
 
