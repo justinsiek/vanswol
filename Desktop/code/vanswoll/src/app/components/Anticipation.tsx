@@ -49,7 +49,7 @@ export default function Anticipation() {
       className="py-40 overflow-hidden relative bg-gradient-to-b from-[var(--tertiary)] to-[var(--secondary)]"
     >
       {/* Decorative gold accent line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-20 bg-[var(--accent)] opacity-20"></div>
+      <div className="absolute top-0 left-1/2 w-[1px] h-32 bg-[var(--accent)] opacity-20"></div>
 
       <div className="container mx-auto px-12 relative">
         {/* Top decorative element */}
@@ -119,10 +119,7 @@ export default function Anticipation() {
           </div>
         </div>
       </div>
-      
-      {/* Background decorative elements */}
-      <div className="absolute -left-20 top-1/3 w-40 h-40 border border-[var(--accent)] border-opacity-5 rounded-full"></div>
-      <div className="absolute -right-40 bottom-20 w-80 h-80 border border-[var(--accent)] border-opacity-5 rounded-full"></div>
+
     </section>
   );
 } 

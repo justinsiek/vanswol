@@ -41,7 +41,7 @@ export default function BrandStory() {
           <div className={`transition-all duration-1200 delay-300 relative ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
             <div className="mb-16 relative">
               {/* Decorative diamond element */}
-              <div className={`absolute -top-8 left-0 w-2 h-2 opacity-0 ${isVisible ? 'opacity-80 transition-opacity duration-1000 delay-700' : ''}`}>
+              <div className={`absolute -top-9 left-0 w-2 h-2 opacity-0 ${isVisible ? 'opacity-80 transition-opacity duration-1000 delay-700' : ''}`}>
                 <div className="w-full h-full border border-[var(--accent)] rotate-45 shimmer"></div>
               </div>
               

@@ -91,11 +91,7 @@ export default function FeaturedCollections() {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span className="text-[var(--accent)] opacity-30 text-lg font-light italic">Watch Image</span>
                   </div>
-                  
-                  {/* Diamond marker at corner */}
-                  <div className="absolute top-6 left-6 w-2 h-2 opacity-20 transition-opacity duration-700 group-hover:opacity-80">
-                    <div className="w-full h-full border border-[var(--accent)] rotate-45"></div>
-                  </div>
+
                   
                   {/* Animated frame that appears on hover */}
                   <div className="absolute top-6 left-6 right-6 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
@@ -116,11 +112,6 @@ export default function FeaturedCollections() {
               </div>
             </div>
           ))}
-        </div>
-        
-        {/* Bottom decorative element */}
-        <div className="flex justify-center mt-28">
-          <div className={`w-32 h-[1px] opacity-0 bg-[var(--accent)] ${isVisible ? 'opacity-30 transition-opacity duration-1000 delay-1500' : ''}`}></div>
         </div>
       </div>
     </section>
